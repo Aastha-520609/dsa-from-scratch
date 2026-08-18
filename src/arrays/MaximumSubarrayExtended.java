@@ -7,32 +7,30 @@ public class MaximumSubarrayExtended {
 		int maxSum = nums[0];
 		int currentSum = nums[0];
 		
-		int start = 0, end = 0;
-		int tempStart = 0;
+		int start = 0;
+		int bestStart = 0;
+		int bestEnd = 0;
 		
-		for(int i = 1; i < nums.length; i++) {
-			
-			// Decide whether to start new subarray or extend previous one
-			if(nums[i] > currentSum + nums[i]) {
-				currentSum = nums[i];
-				tempStart = i;
-			}
-			else {
-				currentSum += nums[i]; //extend previous subarray
-			}
-			
-			//update max and lock start and end
-			if(currentSum > maxSum) {
-				maxSum = currentSum;
-				start = tempStart;
-				end = i;
-			}
-		}
+	   for(int i = 1; i < nums.length; i++) {
+		   
+		   if(currentSum + nums[i] < nums[i]) {
+			   currentSum = nums[i];
+			   start = i;
+		   }else {
+			   currentSum += nums[i];
+		   }
+		   
+		   if(currentSum > maxSum) {
+			   maxSum = currentSum;
+			   bestStart = start;
+			   bestEnd = i;
+		   }
+	   }
 		
 		System.out.println("Maximum Sum = " + maxSum);
         System.out.print("Subarray = ");
         
-        for (int i = start; i <= end; i++) {
+        for (int i = bestStart; i <= bestEnd; i++) {
             System.out.print(nums[i] + " ");
         }
         

@@ -6,26 +6,34 @@ public class LongestSubarrayWithSumK {
 	
 	public static int longestSubarray(int[] arr, int k) {
 	        
-	        HashMap<Integer, Integer> hmap = new HashMap<>();
-	        int maxLen = 0;
+		    HashMap<Integer, Integer> hmap = new HashMap<>();
+		    
 	        int prefixSum = 0;
+	        int maxLength = 0;
 	        
-	        for(int i = 0; i < arr.length; i++){
-	            prefixSum += arr[i];
-	            
-	            if(prefixSum == k){
-	                maxLen = i + 1;
-	            }
-	            
-	            if(hmap.containsKey(prefixSum - k)){
-	                int len = i - hmap.get(prefixSum - k);
-	                maxLen = Math.max(maxLen , len);
-	            }
-	            
-	            hmap.putIfAbsent(prefixSum, i);
+	        for(int i = 0; i < arr.length; i++) {
+	        	prefixSum += arr[i];
+	        	
+	        	if(prefixSum == k) {
+	        		maxLength = i + 1;
+	        	}
+	        	
+	        	int requiredPrefix = prefixSum - k;
+	        	
+	        	if(hmap.containsKey(requiredPrefix)) {
+	        		
+	        		int previousIndex = hmap.get(requiredPrefix);
+	        		int length = i - previousIndex;
+	        		
+	        		maxLength = Math.max(maxLength, length);
+	        	}
+	        	
+	        	if(!hmap.containsKey(prefixSum)) {
+	        		hmap.put(prefixSum, i);
+	        	}
 	        }
 	        
-	        return maxLen;
+	        return maxLength;
 	    }
 	
 	public static void main(String args[]) {
