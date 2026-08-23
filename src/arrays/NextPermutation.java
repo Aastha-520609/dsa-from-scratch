@@ -5,33 +5,43 @@ import java.util.Arrays;
 public class NextPermutation {
 	
 	public static void nextPermutation(int[] nums) {
-        int n = nums.length;
-        int i = n - 2;
+        int n = nums.length; 
+        int pivot = -1;
 
-        while(i >= 0 && nums[i] >= nums[i+1]){
-            i--;
-        }
-
-        if(i >= 0){
-            int j = n - 1;
-            while(nums[j] <= nums[i]){
-                j--;
+        for(int i = n - 2; i >= 0 ; i--){
+            if(nums[i] < nums[i+1]){
+                pivot = i;
+                break;
             }
-            swap(nums, i, j);
         }
 
-        reverse(nums, i+1, n-1);
+        if (pivot == -1) {
+            reverse(nums, 0, n - 1);
+            return;
+        }
+
+        for(int i = n - 1; i > pivot ; i--){
+            if(nums[i] > nums[pivot]){
+                swap(nums, i, pivot);
+                break;
+            }
+        }
+
+        reverse(nums, pivot + 1, n - 1);
+    
     }
 
-    private static void swap(int[] nums, int i, int j){
-        int temp = nums[i];
-        nums[i] = nums[j];
-        nums[j] = temp;
+    public static void swap(int[] nums, int a , int b){
+        int temp = nums[a];
+        nums[a] = nums[b];
+        nums[b] = temp;
     }
 
-    private static void reverse(int[] nums, int start, int end){
-        while(start < end){
-            swap(nums, start++, end--);
+    public static void reverse(int[] nums, int x, int y){
+        while ( x < y ){
+            swap(nums, x, y);
+            x++;
+            y--;
         }
     }
     
