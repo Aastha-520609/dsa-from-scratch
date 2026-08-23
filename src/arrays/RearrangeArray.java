@@ -5,23 +5,25 @@ import java.util.Arrays;
 public class RearrangeArray {
 	public static int[] rearrangeArray(int[] nums) {
         int n = nums.length;
-        int[] result = new int[n];
+        int newArray[] = new int[n];
+        
+        int positiveIndex = 0;
+        int negativeIndex = 1;
 
-        int pIndex = 0;
-        int nIndex = 1;
-
-        for(int num : nums){
-            if(num > 0){
-                result[pIndex] = num;
-                pIndex += 2;
-            }
-            else if(num < 0){
-                result[nIndex] = num;
-                nIndex += 2;
-            }
+        for(int i = 0 ; i < nums.length; i++){
+        	
+          if(nums[i] > 0){
+            newArray[positiveIndex] = nums[i];
+            positiveIndex = positiveIndex + 2;
+          }
+          else if(nums[i] < 0){
+            newArray[negativeIndex] = nums[i];
+            negativeIndex = negativeIndex + 2;
+          }
+          
         }
 
-        return result;
+        return newArray;
     }
 	
 	public static void main(String args[]) {
